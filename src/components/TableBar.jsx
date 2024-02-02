@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Properties from '../Pages/Properties/Properties';
-import Reviews from '../Pages/Reviews/Reviews';
-import UserData from '../Pages/User catalog/UserData';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Properties from "../Pages/Properties/Properties";
+import Reviews from "../Pages/Reviews/Reviews";
+import UserData from "../Pages/User catalog/UserData";
 
 const TableBar = () => {
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState("");
   const location = useLocation();
 
   const isLinkActive = (path) => {
@@ -14,31 +14,37 @@ const TableBar = () => {
 
   return (
     <div>
-      <div className='flex space-x-4 justify-center items-center py-4 bg-[#f1fffe] rounded-lg mb-4 mx-4'>
+      <div className="flex space-x-4 justify-center items-center py-4 bg-[#f1fffe] rounded-lg mb-4 mx-4">
         <Link
-          to='/user_catalog'
+          to="/user_catalog"
           className={`py-2 px-4 w-40 flex items-center justify-center  rounded-lg ${
-            isLinkActive('/user_catalog') ? 'bg-[#1ebbd7] text-white' : 'bg-[#e4f2f1] text-black'
+            isLinkActive("/user_catalog")
+              ? "bg-[#1ebbd7] text-white"
+              : "bg-[#e4f2f1] text-black"
           }`}
-          onClick={() => setActive('Users')}
+          onClick={() => setActive("Users")}
         >
           Users
         </Link>
         <Link
-          to='/properties'
+          to="/properties"
           className={`py-2 px-4 w-40 flex items-center justify-center  rounded-lg ${
-            isLinkActive('/properties') ? 'bg-[#1ebbd7] text-white' : 'bg-[#e4f2f1]  text-black'
+            isLinkActive("/properties")
+              ? "bg-[#1ebbd7] text-white"
+              : "bg-[#e4f2f1]  text-black"
           }`}
-          onClick={() => setActive('Properties')}
+          onClick={() => setActive("Properties")}
         >
           Properties
         </Link>
         <Link
-          to='/reviews'
+          to="/reviews"
           className={`py-2 px-4 w-40 flex items-center justify-center rounded-lg ${
-            isLinkActive('/reviews') ? 'bg-[#1ebbd7]  text-white' : 'bg-[#e4f2f1] text-black'
+            isLinkActive("/reviews")
+              ? "bg-[#1ebbd7]  text-white"
+              : "bg-[#e4f2f1] text-black"
           }`}
-          onClick={() => setActive('Reviews')}
+          onClick={() => setActive("Reviews")}
         >
           Reviews
         </Link>
