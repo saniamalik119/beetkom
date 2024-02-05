@@ -4,7 +4,7 @@ const InputDesign = ({
   register,
   fieldName,
   required,
-  value,
+
   onChange,
   title,
 }) => {
@@ -15,7 +15,7 @@ const InputDesign = ({
         <div className="relative w-full min-w-[200px] h-10">
           <input
             id={fieldName}
-            value={value}
+           
             {...register(fieldName, {
               required: required ? `This is required` : false,
             })}

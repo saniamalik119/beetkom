@@ -1,7 +1,7 @@
 import React from "react";
 
 const SelectInputDesign = ({
-  value,
+
   onChange,
   title,
   options,
@@ -15,7 +15,7 @@ const SelectInputDesign = ({
         <div className="relative w-full min-w-[200px] h-10">
           <select
             id={fieldName}
-            value={value}
+            
             onChange={onChange}
             {...register(fieldName, {
               required: required ? `This is required` : false,

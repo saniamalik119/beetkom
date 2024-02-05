@@ -8,27 +8,23 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 
 import { addDataApi } from "../../api/api";
-const Form = ({ btnText }) => {
+const Form = () => {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm();
+  const [loading, setLoading] = useState(false)
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     console.log("Form Data", data);
     try {
-      await addDataApi()
-      navigate('/properties')
-      
+      setLoading(true);
+      const response = await addDataApi(data);
+      console.log("API Response", response);
+      navigate('/properties');
     } catch (error) {
-      console.eror("error in entering data", error)
+      console.error("Error in entering data", error);
+    } finally {
+      setLoading(false);
     }
-
-    
   };
 
   const listing = [
@@ -49,7 +45,7 @@ const Form = ({ btnText }) => {
   ];
 
   const handleFileUpload = (file, fieldName) => {
-    setValue(fieldName, file);
+    setValue(fieldName, file[0]); // Assuming file is an array, and you want to set the first file
   };
   return (
     <>
@@ -65,6 +61,7 @@ const Form = ({ btnText }) => {
               fieldName={"title"}
               required={true}
               title="Title"
+              value="email"
             />
             <InputDesign
               register={register}
@@ -406,7 +403,7 @@ const Form = ({ btnText }) => {
               // onClick={() => handleSubmit(handleFormSubmit)()}
               className="bg-[#1ebbd7] py-2 px-44 rounded-lg text-white"
             >
-              {btnText}
+           {loading? "SUbmitting..." :  " Submit"}
             </button>
           </div>
           {errors && Object.keys(errors).length > 0 && (

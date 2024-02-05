@@ -1,12 +1,12 @@
 import React from "react";
 
-const Checkbox = ({ label, register, fieldName, required, value }) => {
+const Checkbox = ({ label, register, fieldName, required }) => {
   return (
     <>
       <label className="relative  items-center cursor-pointer">
         <input
           id={fieldName}
-          value={value}
+          
           {...register(fieldName, {
             required: required ? `This is required` : false,
           })}

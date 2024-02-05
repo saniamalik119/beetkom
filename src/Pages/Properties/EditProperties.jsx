@@ -7,7 +7,7 @@ import Upload from "../../components/Upload";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { updateProperties } from "../../api/api";
-import { addDataApi } from "../../api/api";
+
 import { useParams } from "react-router-dom";
 const EditProperties = ({ previousData }) => {
   const { id: property_id } = useParams();

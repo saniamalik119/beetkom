@@ -25,7 +25,10 @@ export const updateProperties = (userId) => {
   return axios.put(`http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/update/Properties/${userId}`);
 };
 
-
-export const addDataApi = () => {
-  return axios.post("http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/write/Properties");
+export const addDataApi = (formData) => {
+  return axios.post("http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/write/Properties", formData)
+    .catch(error => {
+      console.error("API Error:", error);
+      throw error; // Re-throw the error to maintain the error chain
+    });
 };
