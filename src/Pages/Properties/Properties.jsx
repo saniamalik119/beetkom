@@ -10,7 +10,7 @@ import refreshBtn from "../../assets/refresh.png";
 import { CSVLink, CSVDownload } from "react-csv";
 import Search from "../../components/Search";
 import { deleteProperties, updateProperties } from "../../api/api";
-
+import { GetReviews } from "../../api/api";
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -70,11 +70,22 @@ const Properties = () => {
           </button>
         </td>
         <td className="px-6 py-4 ">
+        <td className="px-6 py-4 ">
           <Link
-            to={`/edit_properties/{id}`}
+            to={`/edit_properties/${id}`}
+            
             className="font-medium text-yellow dark:text-red-500 hover:underline cursor-pointer"
           >
             Edit
+          </Link>
+        </td>
+        </td>
+        <td className="px-6 py-4 ">
+          <Link
+            to={`/reviews/${id}`}
+            className="font-medium text-yellow dark:text-red-500 hover:underline cursor-pointer"
+          >
+            reviews
           </Link>
         </td>
       </>

@@ -11,7 +11,8 @@
     { id: 1, title: "Title" },
     { id: 2, title: "Created Date" },
     { id: 3, title: "Action" },
-    {id: 4, title: ""}
+    {id: 4, title: ""},
+    {id: 5, title: ""}
   ]
   export const reviewsHead = [
     { id: 1, title: "id" },

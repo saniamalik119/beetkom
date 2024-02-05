@@ -37,7 +37,7 @@ const TableBar = () => {
         >
           Properties
         </Link>
-        <Link
+        {/* <Link
           to="/reviews"
           className={`py-2 px-4 w-40 flex items-center justify-center rounded-lg ${
             isLinkActive("/reviews")
@@ -47,7 +47,7 @@ const TableBar = () => {
           onClick={() => setActive("Reviews")}
         >
           Reviews
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

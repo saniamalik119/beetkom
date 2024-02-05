@@ -74,7 +74,7 @@ const UserData = () => {
         <td className="px-6 py-4">{email}</td>
         <td className="px-6 py-4">{phone_no}</td>
         <td className="px-6 py-4">{created_on}</td>
-        <td className="px-6 py-4 text-right">
+        <td className="px-6 py-4 ">
           <button
             onClick={() => handleDelete(id)}
             className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"

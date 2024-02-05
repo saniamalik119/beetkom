@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Upload from "../Upload";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { updateProperties } from "../../api/api";
 
+import { addDataApi } from "../../api/api";
 const Form = ({ btnText }) => {
   const navigate = useNavigate();
   const {
@@ -18,22 +18,17 @@ const Form = ({ btnText }) => {
     setValue,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     console.log("Form Data", data);
+    try {
+      await addDataApi()
+      navigate('/properties')
+      
+    } catch (error) {
+      console.eror("error in entering data", error)
+    }
 
-    // const apiUrl =
-    //   "http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/write/Properties";
-
-    // axios
-    //   .post(apiUrl, formData)
-    //   .then((response) => {
-    //     console.log("API response:", response.data);
-    //     navigate("/properties");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error sending data to API:", error);
-    //     // Handle errors
-    //   });
+    
   };
 
   const listing = [
