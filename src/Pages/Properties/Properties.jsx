@@ -14,7 +14,9 @@ import { GetReviews } from "../../api/api";
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false)
   const renderProperties = async () => {
+    setLoading(true)
     try {
       const response = await getProperties();
 
@@ -23,6 +25,8 @@ const Properties = () => {
       setProperties(propertiesData);
     } catch (error) {
       console.error("Error fetching properties data:", error);
+    } finally{
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -34,11 +38,15 @@ const Properties = () => {
     }, 500);
   };
   const handleDelete = async (userId) => {
+    setLoading(true)
     try {
       await deleteProperties(userId);
+      renderProperties()
       console.log("User deleted successfully");
     } catch (error) {
       console.error("Error deleting user:", error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -67,7 +75,7 @@ const Properties = () => {
             onClick={() => handleDelete(id)}
             className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
           >
-            Delete
+           {loading? "Deleting.." : "Delete"}
           </button>
         </td>
         <td className="px-6 py-4 ">
@@ -112,7 +120,9 @@ const Properties = () => {
       <Header />
       <SubNavbar downButton={renderDownloadBtn} />
       <Search handleSearch={handleSearch} />
+     {loading? "loading...." :
       <Table headers={header} data={properties} rowrender={rowRenderer} />
+     }
     </div>
   );
 };
