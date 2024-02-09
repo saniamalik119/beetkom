@@ -10,7 +10,7 @@ import refreshBtn from "../../assets/refresh.png";
 import { CSVLink, CSVDownload } from "react-csv";
 import Search from "../../components/Search";
 import { deleteProperties, updateProperties } from "../../api/api";
-import { GetReviews } from "../../api/api";
+
 const Properties = () => {
   const [properties, setProperties] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -50,12 +50,12 @@ const Properties = () => {
     }
   };
 
-  const rowRenderer = (product) => {
+  const rowRenderer = (product, index) => {
     const { id, title, created_on } = product;
     const searchResults = [title, created_on].filter(
       (field) => typeof field === "string"
     );
-
+const displayIndex = index + 1
     const matchesSearchTerm = searchResults.some((field) =>
       field.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -65,6 +65,9 @@ const Properties = () => {
     }
     return (
       <>
+        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {displayIndex}
+        </td>
         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {title}
         </td>
@@ -81,7 +84,7 @@ const Properties = () => {
         <td className="px-6 py-4 ">
         <td className="px-6 py-4 ">
           <Link
-            to={`/edit_properties/${id}`}
+            to={`/edit_properties/${index}/${id}/`}
             
             className="font-medium text-yellow dark:text-red-500 hover:underline cursor-pointer"
           >

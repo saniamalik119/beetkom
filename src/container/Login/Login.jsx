@@ -3,9 +3,11 @@ import { loginApi } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/actions/auth";
 import "./login.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useLocation } from "react-router-dom";
 import loginImg from "../.././assets/loginLogo.png";
+
 const Login = () => {
+  const location = useLocation()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -17,11 +19,25 @@ const Login = () => {
       const { user, token } = response.data;
 
       const dataUser = dispatch(loginSuccess({ user, token }));
-
-      navigate("/user_catalog");
+    const tokenAuth = dataUser?.token?.token
+    console.log(tokenAuth)
+      if(tokenAuth){
+        navigate("/user_catalog");
+        if (!tokenAuth && location.pathname === "/user_catalog") {
+          // User is in /user_catalog without a token, redirect to /
+          navigate("/");
+        } else {
+          // Redirect based on the token and location
+          navigate(tokenAuth ? "/user_catalog" : "/");
+        }
+      }else{
+        navigate("/")
+      }
+     
     } catch (error) {
       console.error("Login failed", error);
-      console.error("Response data", error.response.data); // Log the response data
+      console.error("Response data", error.response.data);
+      alert("wrong Email and password") // Log the response data
     }
   };
 

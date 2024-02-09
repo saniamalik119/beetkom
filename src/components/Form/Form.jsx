@@ -11,6 +11,7 @@ import { addDataApi } from "../../api/api";
 const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
+  const [file, setSelected] = useState("")
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
 const onSubmit = async (data) => {
@@ -23,6 +24,7 @@ const onSubmit = async (data) => {
     const response = await axios.post(url, data);
     
     console.log('Success:', response.data);
+    navigate("/properties")
   } catch (error) {
     console.error('Error:', error);
   } finally {
@@ -31,25 +33,28 @@ const onSubmit = async (data) => {
 };
 
   const listing = [
-    { value: "option1", label: "Buy" },
-    { value: "option2", label: "rent" },
-    { value: "option3", label: "sale" },
+    { value: "Buy", label: "Buy" },
+    { value: "rent", label: "rent" },
+    { value: "sale", label: "sale" },
   ];
   const catogery = [
-    { value: "option1", label: "Houses" },
-    { value: "option2", label: "Flates" },
+    { value: "Houses", label: "Houses" },
+    { value: "Flates", label: "Flates" },
   ];
   const Location = [
-    { value: "option1", label: "salfeet" },
-    { value: "option2", label: "nablus" },
-    { value: "option3", label: "ramallah" },
-    { value: "option4", label: "Talkurm" },
-    { value: "option5", label: "Hebron" },
-    { value: "option6", label: "bethlehem" },
+    { value: "salfeet", label: "salfeet" },
+    { value: "nablus", label: "nablus" },
+    { value: "ramallah", label: "ramallah" },
+    { value: "Talkurm", label: "Talkurm" },
+    { value: "Hebron", label: "Hebron" },
+    { value: "bethlehem", label: "bethlehem" },
   ];
 
   const handleFileUpload = (file, fieldName) => {
+  
     setValue(fieldName, file);
+    setSelected(file)
+    console.log(file)
   };
   return (
     <>
@@ -130,10 +135,10 @@ const onSubmit = async (data) => {
             />
             <InputDesign
               register={register}
-              fieldName={"security_cameras_count"}
+              fieldName={"security_camaras_count"}
               required={true}
               title="security Camera Count"
-              type="number"
+              type="text"
             />
             <InputDesign
               register={register}
@@ -270,6 +275,9 @@ const onSubmit = async (data) => {
               required={true}
               onFileUpload={(file) => handleFileUpload(file, "main_image")}
             />
+            <div>{file? "has file" : "not file"}
+           
+            </div>
             <Upload
               register={register}
               fieldName={"firstFloorMapImage"}

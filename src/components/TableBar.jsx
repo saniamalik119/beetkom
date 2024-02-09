@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Properties from "../Pages/Properties/Properties";
 import Reviews from "../Pages/Reviews/Reviews";
 import UserData from "../Pages/User catalog/UserData";
-
+import { loginApi } from "../api/api";
+import { loginSuccess } from "../store/actions/auth";
 const TableBar = () => {
   const [active, setActive] = useState("");
   const location = useLocation();
@@ -11,6 +12,7 @@ const TableBar = () => {
   const isLinkActive = (path) => {
     return location.pathname === path;
   };
+
 
   return (
     <div>
