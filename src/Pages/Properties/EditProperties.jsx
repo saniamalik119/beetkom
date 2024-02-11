@@ -295,7 +295,7 @@ const EditProperties = () => {
               required={true}
               onFileUpload={(file) => handleFileUpload(file, "main_image")}
             />
-            {file? "has File" : "not have file"}
+           
             <Upload
               register={register}
               fieldName={"firstFloorMapImage"}

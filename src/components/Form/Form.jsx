@@ -11,7 +11,7 @@ import { addDataApi } from "../../api/api";
 const Form = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
-  const [file, setSelected] = useState("")
+
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
 const onSubmit = async (data) => {
@@ -53,8 +53,7 @@ const onSubmit = async (data) => {
   const handleFileUpload = (file, fieldName) => {
   
     setValue(fieldName, file);
-    setSelected(file)
-    console.log(file)
+   
   };
   return (
     <>
@@ -275,9 +274,7 @@ const onSubmit = async (data) => {
               required={true}
               onFileUpload={(file) => handleFileUpload(file, "main_image")}
             />
-            <div>{file? "has file" : "not file"}
-           
-            </div>
+          
             <Upload
               register={register}
               fieldName={"firstFloorMapImage"}
