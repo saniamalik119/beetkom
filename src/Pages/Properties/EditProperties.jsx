@@ -100,23 +100,27 @@ const EditProperties = () => {
               title="Sub Title"
               type="text"
             />
-            <SelectInputDesign
-              register={register}
-              fieldName={"listing_type"}
-              required={true}
-              options={listing}
-            />
+           <SelectInputDesign
+            register={register}
+            fieldName={"listing_type"}
+            required={true}
+            options={listing}
+            value={propertyData ? propertyData.listing_type : ''}
+/>
+
             <SelectInputDesign
               register={register}
               fieldName={"location_area"}
               required={true}
               options={Location}
+              value={propertyData ? propertyData.location_area : ''}
             />
             <SelectInputDesign
               register={register}
               fieldName={"category_type"}
               required={true}
               options={catogery}
+              value={propertyData ? propertyData.category_type : ''}
             />
             <InputDesign
               register={register}
