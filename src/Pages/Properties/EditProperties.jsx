@@ -14,9 +14,15 @@ const EditProperties = () => {
   const [loading, setLoading] = useState()
   const [propertyData, setPropertyData] = useState(null)
   const [file, setSelected] = useState("")
+  const [uploadedImages, setUploadedImages] = useState({
+    main_image: "",
+    first_floor_map_image: "",
+    sub_image_1: "",
+    sub_image_2: "",
+  });
   const fetchSingleProperties = async()=>{
     const response = await getProperties();
-
+    
       const propertiesData = response.data?.data?.[index];
       console.log(propertiesData)
       if (propertiesData) {
@@ -39,6 +45,11 @@ const EditProperties = () => {
 
   const onSubmit = async (data) => {
     console.log("formData", data)
+     
+    data.main_image = uploadedImages.main_image;
+    data.first_floor_map_image = uploadedImages.first_floor_map_image;
+    data.sub_image_1 = uploadedImages.sub_image_1;
+    data.sub_image_2 = uploadedImages.sub_image_2;
     const url = `http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/update/Properties/${id}`;
   
     setLoading(true); 
@@ -71,9 +82,14 @@ const EditProperties = () => {
     { value: "Hebron", label: "Hebron" },
     { value: "bethlehem", label: "bethlehem" },
   ];
-  const handleFileUpload = (file, fieldName) => {
-    setValue(fieldName, file);
-   
+  const handleFileUpload = (base64String, fieldName) => {
+    console.log("Image base64 string:", base64String);
+
+    // Update the state with the base64 string for the corresponding image field
+    setUploadedImages((prevImages) => ({
+      ...prevImages,
+      [fieldName]: base64String,
+    }));
   };
   return (
     <>
@@ -293,33 +309,36 @@ const EditProperties = () => {
               title="video Url"
               type="text"
             />
-            <Upload
-              register={register}
-              fieldName={"mainImage"}
-              required={true}
-              onFileUpload={(file) => handleFileUpload(file, "main_image")}
-            />
-           
-            <Upload
-              register={register}
-              fieldName={"firstFloorMapImage"}
-              required={true}
-              onFileUpload={(file) =>
-                handleFileUpload(file, "first_floor_map_image")
-              }
-            />
-            <Upload
-              register={register}
-              fieldName={"subImage1"}
-              required={true}
-              onFileUpload={(file) => handleFileUpload(file, "sub_image_1")}
-            />
-            <Upload
-              register={register}
-              fieldName={"subImage2"}
-              required={true}
-              onFileUpload={(file) => handleFileUpload(file, "sub_image_2")}
-            />
+           <Upload
+  title="Upload Image"
+  onFileUpload={(base64String) => handleFileUpload(base64String, 'main_image')}
+  register={register}
+  fieldName="main_image"
+/>
+{uploadedImages.main_image && (
+         <img src={`data:image/png;base64,${uploadedImages.main_image}`} alt="uploadedImage" width={80} className='mb-6' />
+      )}
+
+<Upload
+  title="Upload Image"
+  onFileUpload={(base64String) => handleFileUpload(base64String, 'first_floor_map_image')}
+  register={register}
+  fieldName="first_floor_map_image"
+/>
+
+<Upload
+  title="Upload Image"
+  onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_1')}
+  register={register}
+  fieldName="sub_image_1"
+/>
+
+<Upload
+  title="Upload Image"
+  onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_2')}
+  register={register}
+  fieldName="sub_image_2"
+/>
           </div>
           <h1>Property Good Details</h1>
           <div className="grid grid-cols-3 gap-4 p-10">

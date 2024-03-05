@@ -1,66 +1,29 @@
 import React, { useState } from "react";
 
-const Upload = ({
-  title,
-  onFileUpload,
-  register,
-  fieldName,
-}) => {
+
+const Upload = ({ title, onFileUpload, register, fieldName }) => {
+  const [selectedImage, setSelectedImage] = useState(null); // Store selected image data
+
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
 
-
     if (selectedFile) {
-      const base64String = await convertFileToBase64(selectedFile);
-      console.log("Helo i am here")
-      onFileUpload(base64String);
+      try {
+       
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64String = reader.result.split(",")[1];
       
+          setSelectedImage({ base64String, file: selectedFile });
+       
+          onFileUpload(base64String);
+        };
+        reader.readAsDataURL(selectedFile);
+      } catch (error) {
+        console.error("Error processing image:", error);
+      }
     }
   };
-
-  const convertFileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-  
-      reader.onload = () => {
-        const image = new Image();
-        image.src = reader.result;
-  
-        image.onload = () => {
-          const canvas = document.createElement("canvas");
-          const context = canvas.getContext("2d");
-  
-          // Set canvas dimensions to match the image
-          canvas.width = image.width;
-          canvas.height = image.height;
-  
-          // Draw the image onto the canvas in JPEG format with compression
-          context.drawImage(image, 0, 0, image.width, image.height);
-  
-          canvas.toBlob(
-            (blob) => {
-              // Convert the compressed blob to a Base64-encoded string
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                const base64String = reader.result.split(",")[1];
-                resolve(base64String);
-              };
-              reader.readAsDataURL(blob);
-            },
-            "image/jpeg",
-            4 // Compression quality (adjust as needed)
-          );
-        };
-      };
-  
-      reader.onerror = (error) => {
-        reject(error);
-      };
-  
-      reader.readAsDataURL(file);
-    });
-  };
-  
 
   return (
     <div>
@@ -77,7 +40,6 @@ const Upload = ({
         type="file"
         onChange={handleFileChange}
       />
-     
     </div>
   );
 };

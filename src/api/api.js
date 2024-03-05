@@ -25,5 +25,6 @@ export const updateProperties = (userId) => {
 
 
 export const addDataApi = (data) => {
-  return axios.post("http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/write/Properties");
+  return axios.post("http://ec2-16-171-125-5.eu-north-1.compute.amazonaws.com:3000/api/write/Properties", data);
 };
+
