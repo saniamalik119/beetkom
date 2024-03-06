@@ -68,7 +68,7 @@ const Form = () => {
     // Update the state with the base64 string for the corresponding image field
     setUploadedImages((prevImages) => ({
       ...prevImages,
-      [fieldName]: base64String,
+      [fieldName]: `data:image/jpeg;base64,${base64String}`,
     }));
   };
   return (
@@ -284,37 +284,51 @@ const Form = () => {
               title="video Url"
               type="text"
             />
-          <Upload
+        <div className="flex flex-col space-y-4">
+        <Upload
   title="Upload Image"
   onFileUpload={(base64String) => handleFileUpload(base64String, 'main_image')}
   register={register}
   fieldName="main_image"
 />
 {uploadedImages.main_image && (
-         <img src={`data:image/png;base64,${uploadedImages.main_image}`} alt="uploadedImage" width={80} className='mb-6' />
+         <img src={`${uploadedImages.main_image}`} alt="uploadedImage" width={140} className='mb-6' />
       )}
+        </div>
 
+<div className="flex flex-col space-y-4">
 <Upload
   title="Upload Image"
   onFileUpload={(base64String) => handleFileUpload(base64String, 'first_floor_map_image')}
   register={register}
   fieldName="first_floor_map_image"
 />
-
+{uploadedImages.first_floor_map_image && (
+         <img src={`${uploadedImages.first_floor_map_image}`} alt="uploadedImage" width={140} className='mb-6' />
+      )}
+</div>
+<div className="flex flex-col space-y-4">
 <Upload
   title="Upload Image"
   onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_1')}
   register={register}
   fieldName="sub_image_1"
 />
-
+{uploadedImages.sub_image_1 && (
+         <img src={`${uploadedImages.sub_image_1}`} alt="uploadedImage" width={140} className='mb-6' />
+      )}
+</div>
+<div className="flex flex-col space-y-4">
 <Upload
   title="Upload Image"
   onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_2')}
   register={register}
   fieldName="sub_image_2"
 />
-
+{uploadedImages.sub_image_2 && (
+         <img src={`${uploadedImages.sub_image_2}`} alt="uploadedImage" width={140} className='mb-6' />
+      )}
+</div>
            
           
            

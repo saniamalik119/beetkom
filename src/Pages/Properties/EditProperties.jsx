@@ -47,6 +47,7 @@ const EditProperties = () => {
     console.log("formData", data)
      
     data.main_image = uploadedImages.main_image;
+    
     data.first_floor_map_image = uploadedImages.first_floor_map_image;
     data.sub_image_1 = uploadedImages.sub_image_1;
     data.sub_image_2 = uploadedImages.sub_image_2;
@@ -67,20 +68,20 @@ const EditProperties = () => {
   };
   const listing = [
     { value: "Buy", label: "Buy" },
-    { value: "rent", label: "rent" },
-    { value: "sale", label: "sale" },
+    { value: "Rent", label: "Rent" },
+    { value: "Sale", label: "Sale" },
   ];
   const catogery = [
     { value: "Houses", label: "Houses" },
     { value: "Flates", label: "Flates" },
   ];
-  const Location = [
-    { value: "salfeet", label: "salfeet" },
-    { value: "nablus", label: "nablus" },
-    { value: "ramallah", label: "ramallah" },
+  const location = [
+    { value: "Salfeet", label: "Salfeet" },
+    { value: "Nablus", label: "Nablus" },
+    { value: "Ramallah", label: "Ramallah" },
     { value: "Talkurm", label: "Talkurm" },
     { value: "Hebron", label: "Hebron" },
-    { value: "bethlehem", label: "bethlehem" },
+    { value: "Bethlehem", label: "Bethlehem" },
   ];
   const handleFileUpload = (base64String, fieldName) => {
     console.log("Image base64 string:", base64String);
@@ -88,9 +89,10 @@ const EditProperties = () => {
     // Update the state with the base64 string for the corresponding image field
     setUploadedImages((prevImages) => ({
       ...prevImages,
-      [fieldName]: base64String,
+      [fieldName]: `data:image/jpeg;base64,${base64String}`,
     }));
   };
+  console.log(propertyData?.location_area)
   return (
     <>
     <Header/>
@@ -121,22 +123,24 @@ const EditProperties = () => {
             fieldName={"listing_type"}
             required={true}
             options={listing}
-            value={propertyData ? propertyData.listing_type : ''}
+            value={propertyData ? propertyData?.listing_type : ''}
 />
 
-            <SelectInputDesign
-              register={register}
-              fieldName={"location_area"}
-              required={true}
-              options={Location}
-              value={propertyData ? propertyData.location_area : ''}
-            />
+        
             <SelectInputDesign
               register={register}
               fieldName={"category_type"}
               required={true}
               options={catogery}
               value={propertyData ? propertyData.category_type : ''}
+            />
+            <SelectInputDesign
+              register={register}
+              fieldName={"location_area"}
+              required={true}
+              options={location}
+              
+              value={propertyData ? propertyData.location_area : ''}
             />
             <InputDesign
               register={register}
@@ -309,36 +313,75 @@ const EditProperties = () => {
               title="video Url"
               type="text"
             />
-           <Upload
-  title="Upload Image"
+        <div className="flex flex-col space-y-4">
+        <Upload
+  title="Upload main image"
   onFileUpload={(base64String) => handleFileUpload(base64String, 'main_image')}
   register={register}
   fieldName="main_image"
 />
-{uploadedImages.main_image && (
-         <img src={`data:image/png;base64,${uploadedImages.main_image}`} alt="uploadedImage" width={80} className='mb-6' />
-      )}
+{propertyData ? propertyData.main_image && (
+  uploadedImages.main_image ? (
+    <img src={`${uploadedImages.main_image}`} alt="uploadedImage" width={140} className='mb-6' />
+  ) : (
+    propertyData.main_image && (
+      <img src={`${propertyData.main_image}`} alt="propertyImage" width={140} className='mb-6' />
+    )
+  )
+) : null}
+        </div>
+<div className="flex flex-col space-y-4">
+  <Upload
+    title="Upload first floor map image "
+    onFileUpload={(base64String) => handleFileUpload(base64String, 'first_floor_map_image')}
+    register={register}
+    fieldName="first_floor_map_image"
+  />
+  {propertyData ? propertyData.first_floor_map_image && (
+    uploadedImages.first_floor_map_image ? (
+      <img src={`${uploadedImages.first_floor_map_image}`} alt="uploadedImage" width={140} className='mb-6' />
+    ) : (
+      propertyData.first_floor_map_image && (
+        <img src={`${propertyData.first_floor_map_image}`} alt="propertyImage" width={140} className='mb-6' />
+      )
+    )
+  ): null}
+</div>
+<div className="flex flex-col space-y-4">
+  <Upload
+    title="Upload sub image 1"
+    onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_1')}
+    register={register}
+    fieldName="sub_image_1"
+  />
+  {propertyData ? propertyData.sub_image_1 &&(
+    uploadedImages.sub_image_1 ? (
+      <img src={`${uploadedImages.sub_image_1}`} alt="uploadedImage" width={140} className='mb-6' />
+    ) : (
+      propertyData.sub_image_1 && (
+        <img src={`${propertyData.sub_image_1}`} alt="propertyImage" width={140} className='mb-6' />
+      )
+    )
+  ): null}
+</div>
+<div className="flex flex-col space-y-4">
+  <Upload
+    title="Upload sub image 2"
+    onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_2')}
+    register={register}
+    fieldName="sub_image_2"
+  />
+  {propertyData ? propertyData.sub_image_2 && (
+    uploadedImages.sub_image_2 ? (
+      <img src={`${uploadedImages.sub_image_2}`} alt="uploadedImage" width={140} className='mb-6' />
+    ) : (
+      propertyData.sub_image_2 && (
+        <img src={`${propertyData.sub_image_2}`} alt="propertyImage" width={140} className='mb-6' />
+      )
+    )
+  ) : null}
+</div>
 
-<Upload
-  title="Upload Image"
-  onFileUpload={(base64String) => handleFileUpload(base64String, 'first_floor_map_image')}
-  register={register}
-  fieldName="first_floor_map_image"
-/>
-
-<Upload
-  title="Upload Image"
-  onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_1')}
-  register={register}
-  fieldName="sub_image_1"
-/>
-
-<Upload
-  title="Upload Image"
-  onFileUpload={(base64String) => handleFileUpload(base64String, 'sub_image_2')}
-  register={register}
-  fieldName="sub_image_2"
-/>
           </div>
           <h1>Property Good Details</h1>
           <div className="grid grid-cols-3 gap-4 p-10">

@@ -6,7 +6,8 @@ const SelectInputDesign = ({
   options,
   register,
   fieldName,
-  value,  // Add the value prop
+  value, 
+
 }) => {
   return (
     <div>
