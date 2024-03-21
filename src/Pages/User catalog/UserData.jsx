@@ -12,7 +12,9 @@ import Search from "../../components/Search";
 const UserData = () => {
   const [user, setUser] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false)
   const fetchData = async () => {
+    setLoading(true)
     try {
       const response = await getTableDataSearch();
       const userData = response.data?.data;
@@ -20,6 +22,8 @@ const UserData = () => {
       console.log("userData", userData);
     } catch (error) {
       console.error("Error fetching user data:", error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -27,20 +31,26 @@ const UserData = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (userId) => {
-    try {
-      await deleteUser(userId);
-      console.log("User deleted successfully");
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
-  };
+
   const handleRefresh = () => {
     setTimeout(() => {
       fetchData();
     }, 500);
   };
-
+  const handleDelete = async (userId) => {
+    setLoading(true);
+    try {
+      await deleteUser(userId);
+      console.log("User deleted successfully");
+      fetchData();
+      setUser([...user]); // Force re-render by creating a new reference
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const renderDownloadBtn = () => (
     <div className="flex space-x-4">
       <CSVLink data={user}>
@@ -51,13 +61,13 @@ const UserData = () => {
       </button>
     </div>
   );
-  const rowRenderer = (product) => {
+  const rowRenderer = (product, index) => {
     const { id, name, email, phone_no, created_on } = product;
 
     const searchResults = [id, name, email, phone_no, created_on].filter(
       (field) => typeof field === "string"
     );
-
+const displayIndex = index + 1
     const matchesSearchTerm = searchResults.some((field) =>
       field.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -68,18 +78,18 @@ const UserData = () => {
     return (
       <>
         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {id}
+          {displayIndex}
         </td>
         <td className="px-6 py-4">{name}</td>
         <td className="px-6 py-4">{email}</td>
         <td className="px-6 py-4">{phone_no}</td>
         <td className="px-6 py-4">{created_on}</td>
-        <td className="px-6 py-4 text-right">
+        <td className="px-6 py-4 ">
           <button
             onClick={() => handleDelete(id)}
             className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
           >
-            Delete
+           {loading? "  Deleting...": " Delete"}
           </button>
         </td>
       </>
@@ -95,7 +105,10 @@ const UserData = () => {
 
       <SubNavbar downButton={renderDownloadBtn} />
       <Search handleSearch={handleSearch} />
-      <Table headers={header} data={user} rowrender={rowRenderer} />
+      {loading? "Loading...." :
+         <Table headers={header} data={user} rowrender={rowRenderer} />
+      }
+   
     </div>
   );
 };

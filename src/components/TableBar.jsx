@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Properties from "../Pages/Properties/Properties";
 import Reviews from "../Pages/Reviews/Reviews";
 import UserData from "../Pages/User catalog/UserData";
-
+import { loginApi } from "../api/api";
+import { loginSuccess } from "../store/actions/auth";
 const TableBar = () => {
   const [active, setActive] = useState("");
   const location = useLocation();
@@ -11,6 +12,7 @@ const TableBar = () => {
   const isLinkActive = (path) => {
     return location.pathname === path;
   };
+
 
   return (
     <div>
@@ -37,17 +39,7 @@ const TableBar = () => {
         >
           Properties
         </Link>
-        <Link
-          to="/reviews"
-          className={`py-2 px-4 w-40 flex items-center justify-center rounded-lg ${
-            isLinkActive("/reviews")
-              ? "bg-[#1ebbd7]  text-white"
-              : "bg-[#e4f2f1] text-black"
-          }`}
-          onClick={() => setActive("Reviews")}
-        >
-          Reviews
-        </Link>
+       
       </div>
     </div>
   );
